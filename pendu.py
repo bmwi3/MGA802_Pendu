@@ -9,11 +9,27 @@ def ouvrir_fichier():
         print("Le fichier 'mots_pendu.txt' n'a pas été trouvé.")
         return []
 
+def remplacer_accent(mot):
+    accents = {
+        'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+        'à': 'a', 'â': 'a', 'ä': 'a',
+        'ô': 'o', 'ö': 'o',
+        'ç': 'c',
+        'ù': 'u', 'û': 'u', 'ü': 'u',
+        'î': 'i', 'ï': 'i',
+    }
+    for accent, replacement in accents.items():
+        mot = mot.replace(accent, replacement)
+    return mot
+
 mots = ouvrir_fichier()
 def choisir_mot(mots):
     return random.choice(mots)
 
 mot_aleatoire= choisir_mot(mots)
+# Remplacer les accents dans le mot choisi
+mot_aleatoire = remplacer_accent(mot_aleatoire)
+#Deboguage
 print(f"Le mot à deviner est : ", mot_aleatoire)
 
 def affichage_under_score(mot):
@@ -54,6 +70,19 @@ def hint(mot_aleatoire, essais_restants, mot_cache,indice_donne):
         return True
     return indice_donne
 
+def check_lettre(lettre,mot_aleatoire,mot_cache,essais_restants):
+    if lettre in mot_aleatoire:
+        print("Bien joué ! La lettre est dans le mot.")
+        for j in range(len(mot_aleatoire)):
+            if mot_aleatoire[j] == lettre:
+                mot_cache = mot_cache[:j] + lettre + mot_cache[j+1:]
+        print("Mot : ", mot_cache)
+    else:
+        print("Dommage ! La lettre n'est pas dans le mot.")
+        print("Vous avez perdu un essai.")
+        essais_restants -= 1
+    return essais_restants,mot_cache
+
 
 
 # Initialiser le nombre d'essais restants
@@ -66,16 +95,17 @@ while essais_restants > 0:
     
     
 
-    if lettre in mot_aleatoire:
-        print("Bien joué ! La lettre est dans le mot.")
-        for j in range(len(mot_aleatoire)):
-            if mot_aleatoire[j] == lettre:
-                mot_cache = mot_cache[:j] + lettre + mot_cache[j+1:]
-        print("Mot : ", mot_cache)
-    else:
-        print("Dommage ! La lettre n'est pas dans le mot.")
-        print("Vous avez perdu un essai.")
-        essais_restants -= 1
+    # if lettre in mot_aleatoire:
+    #     print("Bien joué ! La lettre est dans le mot.")
+    #     for j in range(len(mot_aleatoire)):
+    #         if mot_aleatoire[j] == lettre:
+    #             mot_cache = mot_cache[:j] + lettre + mot_cache[j+1:]
+    #     print("Mot : ", mot_cache)
+    # else:
+    #     print("Dommage ! La lettre n'est pas dans le mot.")
+    #     print("Vous avez perdu un essai.")
+    #     essais_restants -= 1
+    essais_restants,mot_cache=check_lettre(lettre,mot_aleatoire,mot_cache,essais_restants)
     if verifier_gagne(mot_cache, mot_aleatoire) or essais_restants == 0:
         if essais_restants == 0:
             print("Vous avez perdu ! Le mot était :", mot_aleatoire)
