@@ -1,5 +1,78 @@
 import random
 
+def afficher_pendu(essais_restants):
+    etats = [
+        """
+         +---+
+         |   |
+         O   |
+        /|\\  |
+        / \\  |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+         O   |
+        /|\\  |
+        /    |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+         O   |
+        /|\\  |
+             |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+         O   |
+        /|   |
+             |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+         O   |
+         |   |
+             |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+         O   |
+             |
+             |
+             |
+        =========
+        """,
+        """
+         +---+
+         |   |
+             |
+             |
+             |
+             |
+        =========
+        """
+    ]
+    # Affiche l'état correspondant au nombre d'essais restants
+    print(etats[essais_restants])
+
+
+
+
+
 def init_path():
     path=input("Entrez le chemin du fichier de mots (laisser vide pour le fichier par défaut) : ")
     if path == '':
@@ -41,7 +114,6 @@ def remplacer_accent(mot):
 
 def choisir_mot(mots):
     return random.choice(mots)
-
 
 
 def affichage_under_score(mot):
@@ -114,13 +186,24 @@ def replay():
 
 
 def acceuil():
-    print("Bienvenue dans le jeu du Pendu !")
-    print("Essayez de deviner le mot en entrant une lettre à la fois.")
-    print("Vous avez 6 essais pour deviner le mot.")
-    print("Les accents seront remplacés par leur équivalent sans accent.")
+    print("=======================================")
+    print("      Bienvenue dans le jeu du Pendu ! ")
+    print("=======================================")
+    print("         +---+")
+    print("         |   |")
+    print("         O   |")
+    print("        /|\\  |")
+    print("        / \\  |")
+    print("             |")
+    print("      =========")
+    print("Règles :")
+    print("- Devinez le mot mystère en proposant une lettre à la fois.")
+    print("- Vous avez 6 essais pour trouver le mot complet.")
+    print("- Les accents sont remplacés par leur équivalent sans accent.")
+    print("- Entrez une seule lettre à chaque essai.")
+    print("---------------------------------------")
     path = init_path()
     mots=ouvrir_fichier(path)
-    print(mots)
     if mots== False:
         print("Aucun mot disponible pour le jeu.")
         return False
@@ -148,6 +231,7 @@ essais_restants, mot_aleatoire, mot_cache,indice_donne=init(mots)
 while essais_restants > 0:
     indice_donne=hint(mot_aleatoire, essais_restants, mot_cache,indice_donne)
     print("Il vous reste ", essais_restants, " essais")
+    afficher_pendu(essais_restants)
     lettre = entrer_lettre()
     
 
@@ -155,5 +239,7 @@ while essais_restants > 0:
     if verifier_gagne(mot_cache, mot_aleatoire) or essais_restants == 0:
         if essais_restants == 0:
             print("Vous avez perdu ! Le mot était :", mot_aleatoire)
+            afficher_pendu(essais_restants)
+
         essais_restants,mot_aleatoire,mot_cache,indice_donne=replay()
  
