@@ -35,12 +35,37 @@ def verifier_gagne(mot_cache, mot_aleatoire):
         return True
     return False
 
+def hint(mot_aleatoire, essais_restants, mot_cache,indice_donne):
+    if indice_donne:
+        return True
+    elif essais_restants == 1 and mot_cache[0] == '_':
+        # Afficher la première lettre du mot
+        print("Indice : Le mot commence par la lettre '", mot_aleatoire[0], "'")
+        return True
+    elif essais_restants == 1:
+        # Afficher une lettre aléatoire du mot
+        index = random.randint(0, len(mot_aleatoire) - 1)
+        while mot_cache[index] != '_':
+            index = random.randint(0, len(mot_aleatoire) - 1)
+
+        print(f"Indice : La lettre à la position {index + 1} est '{mot_aleatoire[index]}'.")
+        mot_cache = mot_cache[:index] + mot_aleatoire[index] + mot_cache[index + 1:]
+        print("Mot : ", mot_cache)
+        return True
+    return indice_donne
+
+
+
 # Initialiser le nombre d'essais restants
 essais_restants = 6
+indice_donne = False
 while essais_restants > 0:
+    indice_donne=hint(mot_aleatoire, essais_restants, mot_cache,indice_donne)
     print("Il vous reste ", essais_restants, " essais")
     lettre = entrer_lettre()
     
+    
+
     if lettre in mot_aleatoire:
         print("Bien joué ! La lettre est dans le mot.")
         for j in range(len(mot_aleatoire)):
