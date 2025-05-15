@@ -1,13 +1,29 @@
 import random
 
-def ouvrir_fichier():
-    try:
-        with open("mots_pendu.txt", 'r',encoding='utf-8') as mots_pendu:
-            mots = [ligne.strip() for ligne in mots_pendu if ligne.strip()]
-        return mots
-    except FileNotFoundError:
-        print("Le fichier 'mots_pendu.txt' n'a pas été trouvé.")
-        return False
+def init_path():
+    path=input("Entrez le chemin du fichier de mots (laisser vide pour le fichier par défaut) : ")
+    if path == '':
+        path = None
+    return path
+
+def ouvrir_fichier(path):
+    if path == None:
+        try:
+            with open("mots_pendu.txt", 'r',encoding='utf-8') as mots_pendu:
+                mots = [ligne.strip() for ligne in mots_pendu if ligne.strip()]
+            return mots
+        except FileNotFoundError:
+            print("Le fichier 'mots_pendu.txt' n'a pas été trouvé.")
+            return False
+    elif path:
+        print('path')
+        try:
+            with open(path, 'r',encoding='utf-8') as mots_pendu:
+                mots = [ligne.strip() for ligne in mots_pendu if ligne.strip()]
+            return mots
+        except FileNotFoundError:
+            print("Le fichier sélectionné n'a pas été trouvé.")
+            return False
 
 def remplacer_accent(mot):
     accents = {
@@ -22,20 +38,15 @@ def remplacer_accent(mot):
         mot = mot.replace(accent, replacement)
     return mot
 
-#mots = ouvrir_fichier()
+
 def choisir_mot(mots):
     return random.choice(mots)
 
-#mot_aleatoire= choisir_mot(mots)
-# Remplacer les accents dans le mot choisi
-#mot_aleatoire = remplacer_accent(mot_aleatoire)
-#Deboguage
-#print(f"Le mot à deviner est : ", mot_aleatoire)
+
 
 def affichage_under_score(mot):
     return '_' * len(mot)
-#mot_cache = affichage_under_score(mot_aleatoire)
-#print(f'Mots :',mot_cache)
+
 
 def entrer_lettre():
     while True:
@@ -107,7 +118,9 @@ def acceuil():
     print("Essayez de deviner le mot en entrant une lettre à la fois.")
     print("Vous avez 6 essais pour deviner le mot.")
     print("Les accents seront remplacés par leur équivalent sans accent.")
-    mots=ouvrir_fichier()
+    path = init_path()
+    mots=ouvrir_fichier(path)
+    print(mots)
     if mots== False:
         print("Aucun mot disponible pour le jeu.")
         return False
