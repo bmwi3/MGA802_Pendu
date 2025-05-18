@@ -41,3 +41,5 @@ Pour pouvoir jouer au pendu plusieurs options s'offre a toi
 ### Option utilisation d'un autre dictionnaire que mots_pendu.txt
 Si tu souhaites utiliser ton propres dictionnaires de mots pour jouer tu peux.
 Pour cela il te suffit de spécifier le chemin d'accès de ton fichier lors du lancement du jeu.
+Exemple de chemin d'accès : C:\Users\Julien\Downloads\ **test_v1.txt** 
+Avec le nom du document texte à ouvrir, ici : **test_v1.txt** 
