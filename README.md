@@ -21,7 +21,9 @@ Le dépôt est constitué de 3 fichiers principaux :
 - `pendu_vf.py` : Le script principal du jeu.
 
 ## Utilisation
-Pour pouvoir jouer au pendu plusieurs options s'offre a toi
+Pour pouvoir jouer au pendu plusieurs options s'offre a toi.
+Attention dans tous les cas tu dois éxecuter le code dans le dossier dans lequel sont les fichiers.
+
 ### Clonage du dépot
 1. Clique sur le bouton `Code` en haut à droite du dépot
 2. Copie le lien
